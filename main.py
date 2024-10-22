@@ -24,7 +24,7 @@ async def monitor_prices(service, telegram_service, interval=500):
             await telegram_service.send_alert(alert_message_usdt)
 
         await asyncio.sleep(interval)
-        telegram_service.delete_all_messages()
+        await telegram_service.delete_all_messages()
         await asyncio.sleep(interval)
 
 async def main():
