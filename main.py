@@ -12,6 +12,8 @@ interval = int(os.getenv('INTERVAL', 20))
 
 async def monitor_prices(service, telegram_service, interval=500):
     while True:
+
+
         price_btc = service.get_price("BTCUSDT")
         price_usdt = service.get_price("USDTBRL")
 
@@ -24,6 +26,8 @@ async def monitor_prices(service, telegram_service, interval=500):
             await telegram_service.send_alert(alert_message_usdt)
 
         await asyncio.sleep(interval)
+        await telegram_service.delete_all_messages()
+        await asyncio.sleep(interval)
 
 async def main():
     telegram_service = TelegramService()
@@ -31,6 +35,5 @@ async def main():
 
     await monitor_prices(service, telegram_service, interval=interval)
 
-# Adiciona a execução assíncrona correta
 if __name__ == "__main__":
     asyncio.run(main())
